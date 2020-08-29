@@ -1,0 +1,27 @@
+#Script Runs Here
+ 
+function ResizeVM ($FuncRGName, $FuncVMName, $FuncNewSize)
+{
+    Write-Output "Upgrading $FuncVMName to $FuncNewSize ... this will require a reboot"
+    $FuncVM = Get-AzureRmVM -ResourceGroupName $FuncRGName -Name $FuncVMName
+    $FuncVM.HardwareProfile.VmSize = $FuncNewSize
+    Update-AzureRmVM -VM $FuncVM -ResourceGroupName $FuncRGName
+}
+ 
+$ResourceGroupName = "Tsin-mhcm-rg"
+$VMName = "MukulTestVm2"
+ 
+Write-Output "Starting the scale up process"
+ 
+$VM = Get-AzureRmVM -ResourceGroupName $ResourceGroupName -Name $VMName
+ 
+$CurrentSize = $VM.HardwareProfile.VmSize
+ 
+switch ($CurrentSize)
+{
+    'Standard_B1ms' { ResizeVM $ResourceGroupName $VMName "Standard_B2ms" }
+    'Standard_B2ms' { ResizeVM $ResourceGroupName $VMName "Standard_B4ms" }
+    'Standard_B4ms' { Write-Output "The VM is at the max allowed size for this application" }
+}
+ 
+Write-Output "The resizing runbook is finished"
