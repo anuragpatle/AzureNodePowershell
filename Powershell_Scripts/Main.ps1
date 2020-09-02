@@ -1,13 +1,14 @@
 using namespace Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels 
 using namespace Microsoft.Azure.Commands.Network.Models
 
-# Import-Module .\Common.psm1
+Import-Module .\Common.psm1
 Import-Module .\VM_Creation.psm1
 Import-Module .\Alert_Creation.psm1
 Import-Module .\VM_Backup.psm1
 Import-Module .\Attach_Windows_Disk.psm1
+Import-Module .\Restart_VM.psm1
 
-
+Write-Output 'Main.ps1 called'
 
 # What Script Does?
 # 1. Creates a VM.
@@ -29,17 +30,19 @@ Import-Module .\Attach_Windows_Disk.psm1
 
 # Login-AzureAccount
 
-ExucuteCreateVM
-$global:RGName = GetSelectedResourceGroupName
-$global:VMName = GetCreatedVMName
+# ExucuteCreateVM
+# $global:RGName = GetSelectedResourceGroupName
+# $global:VMName = GetCreatedVMName
 
 
-$globalVaultName = 'MyVault1' 
+# $globalVaultName = 'MyVault1' 
 
-ExecuteDiskAttachment $global:VMName $global:RGName
+# ExecuteDiskAttachment $global:VMName $global:RGName
 
-EnableVMBackup $global:VMName $global:RGName $globalVaultName
-# EnableVMBackup $global:VMName TSI-TEST-RG $globalVaultName
+# EnableVMBackup $global:VMName $global:RGName $globalVaultName
+# # EnableVMBackup $global:VMName TSI-TEST-RG $globalVaultName
 
-ExecuteAlertCreation $global:VMName $global:RGName
-# ExecuteAlertCreation 'D1VM3' 'TSI-TEST-RG'
+# ExecuteAlertCreation $global:VMName $global:RGName
+# # ExecuteAlertCreation 'D1VM3' 'TSI-TEST-RG'
+
+# RestartVM $global:VMName $global:RGName
