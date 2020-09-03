@@ -38,6 +38,10 @@ app.post("/hi", function (req, res) {
   try {
     
     console.log(body.data.alertContext.condition)
+    
+    console.log(body.data.essentials.alertTargetIDs)
+    console.log(body.data.alertContext.condition.allOf[0].dimensions)
+
   } catch (err) {
     console.error(err);
   }
@@ -45,55 +49,53 @@ app.post("/hi", function (req, res) {
   res.send("user added!");
 });
 
-app.listen(3001, function () {
+app.listen(3000, function () {
   console.log("Server is listening on port 3000...");
 });
 
 /*
+
 {
-  schemaId: 'AzureMonitorMetricAlert',
+  schemaId: 'azureMonitorCommonAlertSchema',
   data: {
-    version: '2.0',
-    properties: null,
-    status: 'Deactivated',
-    context: {
-      timestamp: '2020-08-29T16:25:41.7828985Z',
-      id: '/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/microsoft.insights/metricAlerts/28-Aug-2020Alert',
-      name: '28-Aug-2020Alert',
+    essentials: {
+      alertId: '/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/providers/Microsoft.AlertsManagement/alerts/d8caa4ba-4c03-4e7f-9eb2-53f42c21e10c',
+      alertRule: 'webhooktest',
+      severity: 'Sev4',
+      signalType: 'Metric',
+      monitorCondition: 'Resolved',
+      monitoringService: 'Platform',
+      alertTargetIDs: [Array],
+      originAlertId: '8efc1d1b-ff8c-4646-8b64-027cd8f131fc_TSI-Test-RG_microsoft.insights_metricAlerts_webhooktest_-1302684072',
+      firedDateTime: '2020-09-02T12:34:17.5011792Z',
+      resolvedDateTime: '2020-09-02T12:42:30.4414967Z',
       description: '',
+      essentialsVersion: '1.0',
+      alertContextVersion: '1.0'
+    },
+    alertContext: {
+      properties: null,
       conditionType: 'MultipleResourceMultipleMetricCriteria',
-      severity: '4',
-      condition: [Object],
-      subscriptionId: '8efc1d1b-ff8c-4646-8b64-027cd8f131fc',
-      resourceGroupName: 'TSI-Test-RG',
-      resourceName: 'D1VM26',
-      resourceType: 'Microsoft.Compute/virtualMachines',
-      resourceId: '/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/Microsoft.Compute/virtualMachines/D1VM26',
-      portalLink: 'https://portal.azure.com/#resource/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/Microsoft.Compute/virtualMachines/D1VM26'
+      condition: [Object]
     }
   }
 }
 {
-  schemaId: 'AzureMonitorMetricAlert',
-  data: {
-    version: '2.0',
-    properties: null,
-    status: 'Activated',
-    context: {
-      timestamp: '2020-08-29T16:48:05.5020778Z',
-      id: '/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/microsoft.insights/metricAlerts/webhooktest',
-      name: 'webhooktest',
-      description: '',
-      conditionType: 'MultipleResourceMultipleMetricCriteria',
-      severity: '4',
-      condition: [Object],
-      subscriptionId: '8efc1d1b-ff8c-4646-8b64-027cd8f131fc',
-      resourceGroupName: 'TSI-Test-RG',
-      resourceName: 'NodeServer',
-      resourceType: 'Microsoft.Compute/virtualMachines',
-      resourceId: '/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/Microsoft.Compute/virtualMachines/NodeServer',
-      portalLink: 'https://portal.azure.com/#resource/subscriptions/8efc1d1b-ff8c-4646-8b64-027cd8f131fc/resourceGroups/TSI-Test-RG/providers/Microsoft.Compute/virtualMachines/NodeServer'
+  windowSize: 'PT5M',
+  allOf: [
+    {
+      metricName: 'Percentage CPU',
+      metricNamespace: 'Microsoft.Compute/virtualMachines',
+      operator: 'GreaterThan',
+      threshold: '1',
+      timeAggregation: 'Maximum',
+      dimensions: [Array],
+      metricValue: 0.52,
+      webTestName: null
     }
-  }
+  ],
+  windowStartTime: '2020-09-02T12:34:07.22Z',
+  windowEndTime: '2020-09-02T12:39:07.22Z'
 }
+
 */
